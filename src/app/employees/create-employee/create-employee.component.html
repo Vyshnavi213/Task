@@ -1,0 +1,243 @@
+<form #employeeForm="ngForm" (ngSubmit)="saveEmployee(employee)" ngNativeValidate>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Create Employee</h3>
+        </div>
+        <div class="panel-body">
+
+            <div class="form-group" [class.has-error]="name.invalid && name.touched">
+                <label for="name" class="control-label">Name</label>
+                <input id="name" required type="text" class="form-control" name="name" [(ngModel)]="employee.name"
+                    #name="ngModel" minlength="5">
+                <small class="help-block" class="text-danger" *ngIf="name.invalid && name.touched">
+                    Name is required
+                </small>
+                <small class="text-danger" *ngIf="name.errors?.minlength">
+                    Name must be at least 5 characters long.
+                </small>
+            </div>
+
+            <!--email validator-->
+            <!-- <div class="form-group" [class.has-error]="email.invalid && email.touched">
+                <label for="email" class="control-label">Email</label>
+                <input id="email" required [email]="employee.email!==''" type="text" class="form-control" name="email"
+                    [(ngModel)]="employee.email" #email="ngModel">
+                <span class="help-block" *ngIf="email.errors?.required && email.touched">
+                    Email is required
+                </span>
+                <span class="help-block" *ngIf="email.errors?.email && email.touched">
+                    Email is Invalid
+                </span>
+            </div> -->
+
+            <!--Email pattern validator-->
+            <div class="form-group" [class.has-error]="email.invalid">
+                <label for="email" class="control-label">Email</label>
+                <input id="email" [required]="contactPreference.value=='email'" type="text" class="form-control"
+                    pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" [(ngModel)]="employee.email"
+                    #email="ngModel" name="email">
+                <small class="help-block" class="text-danger" *ngIf="email.errors?.required">
+                    Email is required
+                </small>
+                <small class="help-block" class="text-danger" *ngIf="email.errors?.pattern && email.touched">
+                    Email is Invalid
+                </small>
+            </div>
+
+            <!-- For example pragimtech.com is the only valid domain that I want to allow. Any other domain should be
+            considered invalid.
+            <input pattern="^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(pragimtech)\.com$"> -->
+
+            <div class="form-group" [class.has-error]="phoneNumber.invalid">
+                <label for="phoneNumber" class="control-label">Phone Number</label>
+                <input id="phoneNumber" [required]="contactPreference.value=='phone'" #phoneNumber="ngModel"
+                    class="form-control" type="tel" pattern="^\d{10}" name="phoneNumber"
+                    [(ngModel)]="employee.phoneNumber">
+                <small class="help-block" class="text-danger" *ngIf="phoneNumber.errors?.required">
+                    Phone Number is required
+                </small>
+                <small class="text-danger" *ngIf="phoneNumber.errors?.pattern">Phone number must be 10 digits</small>
+            </div>
+
+            <div class="form-group" [class.has-error]="contactPreference.invalid">
+                <label class="control-label">Contact Preference</label>
+                <div class="form-control">
+                    <label class="radio-inline">
+                        <input type="radio" required #contactPreference="ngModel" name="contactPreference" value="email"
+                            [(ngModel)]="employee.contactPreference"> Email
+                    </label>
+                    &nbsp;
+                    <label class="radio-inline">
+                        <input type="radio" required #contactPreference="ngModel" name="contactPreference" value="phone"
+                            [(ngModel)]="employee.contactPreference"> Phone
+                    </label>
+                </div>
+                <small class="help-block" class="text-danger" *ngIf="contactPreference.errors?.required">
+                    Contact Preference is required
+                </small>
+                <br>
+                <!-- Contact Preference Selected Value : {{ contactPreference.value }} -->
+            </div>
+
+            <div class="form-group" [class.has-error]="gender.invalid">
+                <label class="control-label">Gender</label>
+                <div class="form-control">
+                    <label class="radio-inline">
+                        <input type="radio" name="gender" required #gender="ngModel" value="male"
+                            [(ngModel)]="employee.gender"> Male
+                    </label>
+                    &nbsp;
+                    <label class="radio-inline">
+                        <input type="radio" name="gender" required #gender="ngModel" value="female"
+                            [(ngModel)]="employee.gender"> Female
+                    </label>
+                </div>
+                <small class="help-block" class="text-danger" *ngIf="gender.errors?.required">
+                    Gender is required
+                </small>
+            </div>
+
+            <div class="form-group" [class.has-error]="isActive.invalid && isActive.touched">
+                <div class="form-control">
+                    <label class="checkbox-inline control-label">
+                        <input type="checkbox" [required]="employee.isActive=='null'" name="isActive"
+                            #isActive="ngModel" [(ngModel)]="employee.isActive">
+                        Is Active
+                    </label>
+                </div>
+                <small class="help-block" class="text-danger" *ngIf="isActive.errors?.required && isActive.touched">
+                    Is Active is required
+                </small>
+            </div>
+
+            <!--value-->
+            <!-- <div class="form-group" [class.has-error]="department.touched && department.invalid">
+                <label for="department" class="control-label">
+                    Department
+                </label>
+                <select id="department" required #department="ngModel" name="department"
+                    [(ngModel)]="employee.department" class="form-control">
+                    <option value="-1">Select Department</option>
+                    <option *ngFor="let dept of departments" [value]="dept.id">
+                        {{dept.name}}
+                    </option>
+                </select>
+                <span class="help-block" *ngIf="department.touched && department.invalid">
+                    Department is required
+                </span>
+            </div> -->
+
+            <!--ngValue-->
+            <div class="form-group" [class.has-error]="department.touched && department.invalid">
+                <label for="department" class="control-label">Department</label>
+                <select required #department="ngModel" name="department" [(ngModel)]="employee.department"
+                    id="department" class="form-control">
+                    <option [ngValue]="null">Select Department</option>
+                    <option *ngFor="let dept of departments" [value]="dept.id">
+                        {{dept.name}}
+                    </option>
+                </select>
+                <small class="help-block" class="text-danger" *ngIf="department.touched && department.errors?.required">
+                    Department is required
+                </small>
+            </div>
+
+            <!-- <div class="form-group" [class.has-error]="department.touched && department.errors?.defaultSelected">
+                <label for="department" class="control-label">Department</label>
+                <select id="department" #department="ngModel" name="department" [(ngModel)]="employee.department"
+                    appSelectValidator class="form-control">
+                    <option value="-1">Select Department</option>
+                    <option *ngFor="let dept of departments" [value]="dept.id">
+                        {{dept.name}}
+                    </option>
+                </select>
+                <span class="help-block" *ngIf="department.touched && department.errors?.defaultSelected">
+                    Department is required
+                </span>
+            </div> -->
+
+            <div class="form-group">
+                <label for="dateOfBirth">Date of Birth</label>
+                <input type="text" id="dateOfBirth" bsDatepicker name="dateOfBirth" [(ngModel)]="employee.dateOfBirth"
+                    class="form-control" [bsConfig]="datePickerConfig" />
+            </div>
+
+        </div>
+        <div class="panel-footer">
+            <button class="btn btn-primary" type="submit" [disabled]="employeeForm.invalid">Save</button>
+        </div>
+    </div>
+</form>
+
+Angular Generated Form Model : {{employeeForm.value | json}}
+<br />
+<br />
+Our Employee Model : {{ employee | json}}
+
+
+<!--<form #employeeForm="ngForm">
+    #employeeForm is called template reference variable.
+    Notice we have assigned "ngForm" as the value for the template reference variable employeeForm.
+    So employeeForm variable holds a reference to the form.
+    When Angular sees a form tag, it automatically attaches the ngForm directive to it. 
+    The ngForm directive holds all the form controls that we create with ngModel directive and name attribute, 
+    and monitors their properties like value, dirty, touched, valid etc.  -->
+
+
+<!-- ngForm directive is provided by Angular FormsModule.
+    So to be able to use it, we will have to import the FormsModule in our AppModule file (app.module.ts).-->
+
+<!--The ngSubmit directive submits the form when we hit the enter key or when we click the Submit button.
+    When the form is submitted, the method on the submit button is called and we are passing it the employeeForm.-->
+
+<!--The ngModel directive is used for creating two-way data binding
+    i.e to keep the HTML element value and it's corresponding component property in sync.-->
+
+<!--Input fields have the following states:
+>> untouched: The field has not been touched yet
+>> touched: The field has been touched
+>> pristine: The field has not been modified yet (pristine means the value has not been changed)
+>> dirty: The field has been modified (dirty means the value has been changed)
+>> invalid: The field content is not valid
+>> valid: The field content is valid
+They are all properties of the input field, and are either true or false.-->
+
+
+<!--Forms have the following states:
+>> pristine: No fields have been modified yet
+>> dirty: One or more have been modified
+>> invalid: The form content is not valid
+>> valid: The form content is valid
+>> submitted: The form is submitted
+They are all properties of the form, and are either true or false.-->
+
+
+<!-- There are two ways for Email validation
+>> email validator
+>> pattern validator -->
+
+
+<!--The question mark here is called the Safe navigation operator.
+    The Safe Navigation Operator is also known as the "Elvis Operator".
+    It protects against null and undefined values in property paths.
+    It is generally used when we are not sure if a property exists or not. 
+    This operator is very useful to protect against null and undefined values in property paths.
+Syntax: Object?.path
+
+Example: 
+    Without safe navigation operator
+    <div> Hi, This Text will generate error!!! {{data.firstName}} </div>
+    This example gives error  
+    Here I am not declaring the firstName property and then it displays error such as 'Unable to get property of 'firstName' of undefined or null reference'
+
+    With safe navigation operator
+    <div> Hi, This Text will not generating error Console!!! {{data?.firstName}} </div>  
+    This example doesn't gives error
+    It will give output as 'Consider a valid HTML 5 doctype' but not error. -->
+
+<!--Using ngValue instead of value
+    If you use value, null is treated as a string and not as a null.
+    Hence the required validation does not work.-->
+
+
+<!--appSelectValidator is the selector we gave for our custom validation directive-->

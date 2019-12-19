@@ -1,0 +1,9 @@
+.navbar-nav {
+    display: flex;
+    flex-direction: row;
+    padding-left: 15px;
+}
+
+*, ::after, ::before {
+    padding-right: 15px;
+}

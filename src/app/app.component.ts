@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,21 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'task';
+  //   title = 'task';
+
+  
+  // constructor(private fb: FormBuilder) { }
+  // public lobselection: FormGroup;
+  // ngOnInit() {
+  //   this.lobselection = this.fb.group({
+  //     lob: ['']
+  //   })
+  // }
+  // onSubmit() {
+  //   console.log(this.lobselection.value);
+  // }
+  constructor() { }
+  
+  ngOnInit() { }
+
 }
