@@ -12,12 +12,26 @@ import { CreateEmployeeComponent } from './employees/create-employee/create-empl
 import { ButtoncmpComponent } from './buttoncmp/buttoncmp.component';
 import { MainDropdownComponent } from './main-dropdown/main-dropdown.component';
 import { SidebardropdownComponent } from './sidebardropdown/sidebardropdown.component';
+import { DonutChartComponent } from './donut-chart/donut-chart.component';
+import { GoogleChartComponent } from './google-chart/google-chart.component';
+import { LandingpageComponent } from './landingpage/landingpage.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'sidebardropdown',
+    redirectTo: 'landingpage',
     pathMatch: 'full'
+  },{
+    path: 'landingpage',
+    component: LandingpageComponent
+  },
+  {
+    path: 'donut',
+    component: DonutChartComponent
+  },
+  {
+    path: 'googleChart',
+    component: GoogleChartComponent
   },
   {
     path: 'sidebardropdown',

@@ -25,7 +25,11 @@ import { CreateEmployeeComponent } from './employees/create-employee/create-empl
 import { ButtoncmpComponent } from './buttoncmp/buttoncmp.component';
 import { MainDropdownComponent } from './main-dropdown/main-dropdown.component';
 import { SidebardropdownComponent } from './sidebardropdown/sidebardropdown.component';
-
+import { DonutChartComponent } from './donut-chart/donut-chart.component';
+import { ChartsModule } from 'ng2-charts';
+import { Chart } from 'chart.js';
+import { GoogleChartComponent } from './google-chart/google-chart.component';
+import { LandingpageComponent } from './landingpage/landingpage.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,11 +41,15 @@ import { SidebardropdownComponent } from './sidebardropdown/sidebardropdown.comp
     CreateEmployeeComponent,
     ButtoncmpComponent,
     MainDropdownComponent,
-    SidebardropdownComponent
+    SidebardropdownComponent,
+    DonutChartComponent,
+    GoogleChartComponent,
+    LandingpageComponent
   ],
   imports: [
     NgbModule,
     BrowserModule,
+    ChartsModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
